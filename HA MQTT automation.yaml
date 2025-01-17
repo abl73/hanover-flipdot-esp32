@@ -1,0 +1,23 @@
+alias: Hanover Flipdot - Zonnepanelen
+description: ""
+triggers:
+  - trigger: time_pattern
+    minutes: "0"
+conditions:
+  - type: is_occupied
+    condition: device
+    device_id: < >
+    entity_id: < >
+    domain: binary_sensor
+actions:
+  - action: mqtt.publish
+    metadata: {}
+    data:
+      evaluate_payload: false
+      qos: 0
+      retain: false
+      topic: hanoverflipdot/display
+      payload: >-
+        [z] Zon: {{ (states('sensor.zonnepanelen_opbrengst_vandaag_in_kwh') |
+        float ) | round(2) }}KwH
+mode: single
